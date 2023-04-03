@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Helpers;
-using Color = System.Windows.Media.Color;
 using ColorConverter = System.Windows.Media.ColorConverter;
 
 namespace Byz_Chess
@@ -19,14 +15,14 @@ namespace Byz_Chess
 
         public Position SelectedPosition;
 
-        private Brush color1 = new SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#FF502D16"));
-        private Brush color2 = new SolidColorBrush((System.Windows.Media.Color)ColorConverter.ConvertFromString("#FFD38D5F"));
-        private Brush[] Colors;
+        public readonly Brush Color1 = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF502D16"));
+        public readonly Brush Color2 = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD38D5F"));
+        private readonly Brush[] _colors;
         public ChessBoard(IEnumerable<Path> positions, int height)
         {
-            Colors = new Brush[]
+            _colors = new Brush[]
             {
-                color1, color2
+                Color1, Color2
             };
             SelectedPosition = Position.Empty;
             Positions = new CircularList<List<Position>>();
@@ -50,7 +46,7 @@ namespace Byz_Chess
                 tempList.Add(new Position()
                 {
                     Drawing = position,
-                    Color = Colors[(i + Positions.Count) % 2]
+                    Color = _colors[(i + Positions.Count) % 2]
                 });
                 i++;
                 if (i % width != 0) continue;

@@ -45,8 +45,14 @@ namespace Byz_Chess.Resources
         {
             var cell = (Path)sender;
 
-            var row = cell.Name.First() - 'a';
+            var row = cell.Name.First() - 'A';
             var col = Convert.ToInt32(cell.Name[1..]) - 1;
+            if (SelectedPosition == Board.Positions[row][col])
+            {
+                SelectedPosition = Position.Empty;
+                return;
+            }
+
             SelectedPosition = Board.Positions[row][col];
         }
 
