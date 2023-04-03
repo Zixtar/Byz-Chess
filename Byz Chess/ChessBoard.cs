@@ -28,28 +28,29 @@ namespace Byz_Chess
             {
                 color1, color2
             };
-                SelectedPosition = Position.Empty;
+            SelectedPosition = Position.Empty;
             Positions = new CircularList<List<Position>>();
             InitChessBoard(positions, height);
         }
 
         private void InitChessBoard(IEnumerable<Path> positions, int height)
         {
-            if (positions.Count() % height != 0)
+            var paths = positions as Path[] ?? positions.ToArray();
+            if (paths.Length % height != 0)
             {
                 MessageBox.Show("Board size is invalid", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            var width = positions.Count() / height;
-            int i = 0;
+            var width = paths.Length / height;
+            var i = 0;
             var tempList = new List<Position>();
-            foreach (var position in positions)
+            foreach (var position in paths)
             {
 
                 tempList.Add(new Position()
                 {
                     Drawing = position,
-                    Color = Colors[(i + Positions.Count())%2]
+                    Color = Colors[(i + Positions.Count) % 2]
                 });
                 i++;
                 if (i % width != 0) continue;

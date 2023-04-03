@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Linq;
 
 namespace Byz_Chess.Resources
 {
@@ -38,9 +37,8 @@ namespace Byz_Chess.Resources
         public ChessBoardView()
         {
             InitializeComponent();
-            var positionPaths = board.Children.OfType<Path>().Where(x => x.Tag?.ToString() == "Position");
-            SortedSet<Path> sortedPaths = new SortedSet<Path>(positionPaths, new PathComparer<Path>());
-            Board = new ChessBoard(sortedPaths, 4);
+            var positionPaths = new SortedSet<Path>(BoardCanvas.Children.OfType<Path>().Where(x => x.Tag?.ToString() == "Position"), new PathComparer<Path>());
+            Board = new ChessBoard(positionPaths, 4);
         }
 
         private void Cell_MouseDown(object sender, MouseButtonEventArgs e)
@@ -48,7 +46,7 @@ namespace Byz_Chess.Resources
             var cell = (Path)sender;
 
             var row = cell.Name.First() - 'a';
-            var col = Convert.ToInt32(cell.Name.Substring(1)) - 1;
+            var col = Convert.ToInt32(cell.Name[1..]) - 1;
             SelectedPosition = Board.Positions[row][col];
         }
 
@@ -61,10 +59,12 @@ namespace Byz_Chess.Resources
         {
             public int Compare(Path? x, Path? y) //horrible horrible comparer
             {
-                var Name1 = x.Name;
-                var Name2 = y.Name;
-                if (Name1.Length != y.Name.Length && Name1.First() == Name2.First()) return Math.Sign((Name1.Length - Name2.Length));
-                return String.Compare(Name1, Name2);
+                if (x == null || y == null) return 0;
+
+                var name1 = x.Name;
+                var name2 = y.Name;
+                if (name1.Length != y.Name.Length && name1.First() == name2.First()) return Math.Sign((name1.Length - name2.Length));
+                return string.Compare(name1, name2);
             }
         }
     }
