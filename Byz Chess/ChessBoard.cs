@@ -19,7 +19,7 @@ namespace Byz_Chess
         public readonly Brush Color1 = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF502D16"));
         public readonly Brush Color2 = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD38D5F"));
         private readonly Brush[] _colors;
-        public ChessBoard(IEnumerable<Path> positions, int height)
+        public ChessBoard(IEnumerable<Resources.PositionUC> positions, int height)
         {
             _colors = new Brush[]
             {
@@ -30,9 +30,9 @@ namespace Byz_Chess
             InitChessBoard(positions, height);
         }
 
-        private void InitChessBoard(IEnumerable<Path> positions, int height)
+        private void InitChessBoard(IEnumerable<Resources.PositionUC> positions, int height)
         {
-            var paths = positions as Path[] ?? positions.ToArray();
+            var paths = positions as Resources.PositionUC[] ?? positions.ToArray();
             if (paths.Length % height != 0)
             {
                 MessageBox.Show("Board size is invalid", "Error", MessageBoxButton.OK, MessageBoxImage.Error);

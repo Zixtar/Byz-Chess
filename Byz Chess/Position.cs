@@ -13,7 +13,7 @@ namespace Byz_Chess
     {
         public static Position Empty => new Position();
         public Brush? Color;
-        public Path Drawing = new Path();
+        public Resources.PositionUC? Drawing;
         public string Name => Drawing.Name;
 
         private IPiece _piece;

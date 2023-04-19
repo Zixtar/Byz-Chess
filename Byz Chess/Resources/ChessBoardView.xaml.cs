@@ -29,9 +29,10 @@ namespace Byz_Chess.Resources
             get => Board.SelectedPosition;
             set
             {
-                SelectedPosition.Drawing.Fill = SelectedPosition.Color;
+                if (SelectedPosition.Drawing != null) SelectedPosition.Drawing.Fill = SelectedPosition.Color;
                 Board.SelectedPosition = value;
-                SelectedPosition.Drawing.Fill = Brushes.GreenYellow;
+                if (SelectedPosition.Drawing != null) SelectedPosition.Drawing.Fill = Brushes.GreenYellow;
+
                 Board.ShowPossibleMoves();
             }
         }
@@ -39,13 +40,13 @@ namespace Byz_Chess.Resources
         public ChessBoardView()
         {
             InitializeComponent();
-            var positionPaths = new SortedSet<Path>(BoardCanvas.Children.OfType<Path>().Where(x => x.Tag?.ToString() == "Position"), new PathComparer<Path>());
+            var positionPaths = new SortedSet<PositionUC>(BoardCanvas.Children.OfType<PositionUC>(), new PathComparer<PositionUC>());
             Board = new ChessBoard(positionPaths, 4);
         }
 
         private void Cell_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var cell = (Path)sender;
+            var cell = (PositionUC)sender;
             var row = cell.Name.First() - 'A';
             var col = Convert.ToInt32(cell.Name[1..]) - 1;
             if (SelectedPosition == Board.Positions[row][col])
@@ -59,16 +60,16 @@ namespace Byz_Chess.Resources
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Board.PlacePiece(new Pawn(),SelectedPosition);
+            Board.PlacePiece(new Pawn(), SelectedPosition);
             BitmapImage theImage = new BitmapImage
                 (new Uri("D:\\Image.png", UriKind.Absolute));
             var imgBrush = new ImageBrush(theImage);
             var drawing = new VisualBrush();
         }
 
-        private class PathComparer<T> : IComparer<Path>
+        private class PathComparer<T> : IComparer<PositionUC>
         {
-            public int Compare(Path? x, Path? y) //horrible horrible comparer
+            public int Compare(PositionUC? x, PositionUC? y) //horrible horrible comparer
             {
                 if (x == null || y == null) return 0;
 

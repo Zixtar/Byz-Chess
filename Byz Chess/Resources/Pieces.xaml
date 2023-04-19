@@ -1,149 +1,17 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <VisualBrush x:Key="WPawn"  Stretch="None">
-        <VisualBrush.Visual>
-            <Grid>
-                <Rectangle Fill="#FFD38D5F" Height="100" Width="200" Stretch="Fill"></Rectangle>
-                <Image Source="/Resources/Images/wpawn.png"
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"
-                           Height="40"
-                           Width="40"/>
-            </Grid>
-        </VisualBrush.Visual>
-    </VisualBrush>
-    <VisualBrush x:Key="WKnight"  Stretch="None">
-        <VisualBrush.Visual>
-            <Grid>
-                <Rectangle Fill="#FFD38D5F" Height="100" Width="200" Stretch="Fill"></Rectangle>
-                <Image Source="/Resources/Images/wknight.png"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"
-                       Height="40"
-                       Width="40"/>
-            </Grid>
-        </VisualBrush.Visual>
-    </VisualBrush>
-    <VisualBrush x:Key="WKing"  Stretch="None">
-        <VisualBrush.Visual>
-            <Grid>
-                <Rectangle Fill="#FFD38D5F" Height="100" Width="200" Stretch="Fill"></Rectangle>
-                <Image Source="/Resources/Images/wking.png"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"
-                       Height="40"
-                       Width="40"/>
-            </Grid>
-        </VisualBrush.Visual>
-    </VisualBrush>
-    <VisualBrush x:Key="WQueen"  Stretch="None">
-        <VisualBrush.Visual>
-            <Grid>
-                <Rectangle Fill="#FFD38D5F" Height="100" Width="200" Stretch="Fill"></Rectangle>
-                <Image Source="/Resources/Images/wqueen.png"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"
-                       Height="40"
-                       Width="40"/>
-            </Grid>
-        </VisualBrush.Visual>
-    </VisualBrush>
-    <VisualBrush x:Key="WRook"  Stretch="None">
-        <VisualBrush.Visual>
-            <Grid>
-                <Rectangle Fill="#FFD38D5F" Height="100" Width="200" Stretch="Fill"></Rectangle>
-                <Image Source="/Resources/Images/wrook.png"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"
-                       Height="40"
-                       Width="40"/>
-            </Grid>
-        </VisualBrush.Visual>
-    </VisualBrush>
-    <VisualBrush x:Key="WBishop"  Stretch="None">
-        <VisualBrush.Visual>
-            <Grid>
-                <Rectangle Fill="#FFD38D5F" Height="100" Width="200" Stretch="Fill"></Rectangle>
-                <Image Source="/Resources/Images/wbishop.png"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"
-                       Height="40"
-                       Width="40"/>
-            </Grid>
-        </VisualBrush.Visual>
-    </VisualBrush>
-    <VisualBrush x:Key="BPawn"  Stretch="None">
-        <VisualBrush.Visual>
-            <Grid>
-                <Rectangle Fill="#FFD38D5F" Height="100" Width="200" Stretch="Fill"></Rectangle>
-                <Image Source="/Resources/Images/bpawn.png"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"
-                       Height="40"
-                       Width="40"/>
-            </Grid>
-        </VisualBrush.Visual>
-    </VisualBrush>
-    <VisualBrush x:Key="BKnight"  Stretch="None">
-        <VisualBrush.Visual>
-            <Grid>
-                <Rectangle Fill="#FFD38D5F" Height="100" Width="200" Stretch="Fill"></Rectangle>
-                <Image Source="/Resources/Images/bknight.png"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"
-                       Height="40"
-                       Width="40"/>
-            </Grid>
-        </VisualBrush.Visual>
-    </VisualBrush>
-    <VisualBrush x:Key="BKing"  Stretch="None">
-        <VisualBrush.Visual>
-            <Grid>
-                <Rectangle Fill="#FFD38D5F" Height="100" Width="200" Stretch="Fill"></Rectangle>
-                <Image Source="/Resources/Images/bking.png"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"
-                       Height="40"
-                       Width="40"/>
-            </Grid>
-        </VisualBrush.Visual>
-    </VisualBrush>
-    <VisualBrush x:Key="BQueen"  Stretch="None">
-        <VisualBrush.Visual>
-            <Grid>
-                <Rectangle Fill="#FFD38D5F" Height="100" Width="200" Stretch="Fill"></Rectangle>
-                <Image Source="/Resources/Images/bqueen.png"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"
-                       Height="40"
-                       Width="40"/>
-            </Grid>
-        </VisualBrush.Visual>
-    </VisualBrush>
-    <VisualBrush x:Key="BRook"  Stretch="None">
-        <VisualBrush.Visual>
-            <Grid>
-                <Rectangle Fill="#FFD38D5F" Height="100" Width="200" Stretch="Fill"></Rectangle>
-                <Image Source="/Resources/Images/brook.png"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"
-                       Height="40"
-                       Width="40"/>
-            </Grid>
-        </VisualBrush.Visual>
-    </VisualBrush>
-    <VisualBrush x:Key="BBishop"  Stretch="None">
-        <VisualBrush.Visual>
-            <Grid>
-                <Rectangle Fill="#FFD38D5F" Height="100" Width="200" Stretch="Fill"></Rectangle>
-                <Image Source="/Resources/Images/bbishop.png"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"
-                       Height="40"
-                       Width="40"/>
-            </Grid>
-        </VisualBrush.Visual>
-    </VisualBrush>
+    <BitmapImage x:Key="WPawn" UriSource="/Resources/Images/wpawn.png"/>
+    <BitmapImage x:Key="WKnight" UriSource="/Resources/Images/wknight.png"/>
+    <BitmapImage x:Key="WKing" UriSource="/Resources/Images/wking.png"/>
+    <BitmapImage x:Key="WQueen" UriSource="/Resources/Images/wqueen.png"/>
+    <BitmapImage x:Key="WRook" UriSource="/Resources/Images/wrook.png"/>
+    <BitmapImage x:Key="WBishop"  UriSource="/Resources/Images/wbishop.png"/>
+    <BitmapImage x:Key="BPawn" UriSource="/Resources/Images/bpawn.png"/>
+    <BitmapImage x:Key="BKnight" UriSource="/Resources/Images/bknight.png"/>
+    <BitmapImage x:Key="BKing"  UriSource="/Resources/Images/bking.png"/>
+    <BitmapImage x:Key="BQueen"  UriSource="/Resources/Images/bqueen.png"/>
+    <BitmapImage x:Key="BRook"  UriSource="/Resources/Images/brook.png"/>
+    <BitmapImage x:Key="BBishop" UriSource="/Resources/Images/bbishop.png"/>
 
 </ResourceDictionary>
