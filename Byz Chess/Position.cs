@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Byz_Chess.Pieces;
 
 namespace Byz_Chess
 {
@@ -14,7 +15,23 @@ namespace Byz_Chess
         public Brush? Color;
         public Path Drawing = new Path();
         public string Name => Drawing.Name;
-        public IPiece? Piece;
 
+        private IPiece _piece;
+
+        public IPiece? Piece
+        {
+            get => _piece;
+            set
+            {
+                _piece = value;
+                Color = Piece.Color;
+            }
+        }
+
+        public IEnumerable<Offset> GetMoves()
+        {
+            if(Piece == null) return Enumerable.Empty<Offset>();
+            return Piece.GetMoves();
+        }
     }
 }

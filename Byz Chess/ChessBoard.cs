@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Byz_Chess.Pieces;
 using Helpers;
 using ColorConverter = System.Windows.Media.ColorConverter;
 
@@ -54,6 +55,16 @@ namespace Byz_Chess
                 tempList = new List<Position>();
                 i = 0;
             }
+        }
+
+        public void PlacePiece(IPiece piece, Position position)
+        {
+            position.Piece = piece;
+        }
+
+        public void ShowPossibleMoves()
+        {
+            var pieceMoves = SelectedPosition.GetMoves();
         }
     }
 }

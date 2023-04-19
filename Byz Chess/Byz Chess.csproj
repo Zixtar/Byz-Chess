@@ -9,7 +9,65 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\bbishop.png" />
+    <None Remove="Resources\Images\bking.png" />
+    <None Remove="Resources\Images\bknight.png" />
+    <None Remove="Resources\Images\bpawn.png" />
+    <None Remove="Resources\Images\bqueen.png" />
+    <None Remove="Resources\Images\brook.png" />
+    <None Remove="Resources\Images\wbishop.png" />
+    <None Remove="Resources\Images\wking.png" />
+    <None Remove="Resources\Images\wknight.png" />
+    <None Remove="Resources\Images\wpawn.png" />
+    <None Remove="Resources\Images\wqueen.png" />
+    <None Remove="Resources\Images\wrook.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Helpers\Helpers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\bbishop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\bking.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\bknight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\bpawn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\bqueen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\brook.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\wbishop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\wking.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\wknight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\wpawn.png" />
+    <Resource Include="Resources\Images\wqueen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\wrook.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Images\wpawn.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

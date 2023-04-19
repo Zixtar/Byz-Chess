@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Byz_Chess.Pieces;
 
 namespace Byz_Chess.Resources
 {
@@ -31,6 +32,7 @@ namespace Byz_Chess.Resources
                 SelectedPosition.Drawing.Fill = SelectedPosition.Color;
                 Board.SelectedPosition = value;
                 SelectedPosition.Drawing.Fill = Brushes.GreenYellow;
+                Board.ShowPossibleMoves();
             }
         }
 
@@ -44,7 +46,6 @@ namespace Byz_Chess.Resources
         private void Cell_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cell = (Path)sender;
-
             var row = cell.Name.First() - 'A';
             var col = Convert.ToInt32(cell.Name[1..]) - 1;
             if (SelectedPosition == Board.Positions[row][col])
@@ -58,7 +59,11 @@ namespace Byz_Chess.Resources
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            Board.PlacePiece(new Pawn(),SelectedPosition);
+            BitmapImage theImage = new BitmapImage
+                (new Uri("D:\\Image.png", UriKind.Absolute));
+            var imgBrush = new ImageBrush(theImage);
+            var drawing = new VisualBrush();
         }
 
         private class PathComparer<T> : IComparer<Path>
