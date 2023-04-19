@@ -16,15 +16,15 @@
           Stroke="{Binding Path=Stroke}" 
           Data="{Binding Path=Data}">
         <Path.Fill>
-            <VisualBrush>
+            <VisualBrush Stretch="None">
                 <VisualBrush.Visual>
                     <Grid>
-                        <Rectangle Fill="{Binding Path=Fill}" Height="100" Width="200" Stretch="Fill"></Rectangle>
+                        <Rectangle Fill="{Binding Path=Fill}" Height="300" Width="200" Stretch="Fill"></Rectangle>
                         <Image Source="{Binding Path=Piece}"
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Center"
-                           Height="50"
-                           Width="50"/>
+                           Height="40"
+                           Width="40"/>
                     </Grid>
                 </VisualBrush.Visual>
             </VisualBrush>

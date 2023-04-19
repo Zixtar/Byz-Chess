@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:Class="Byz_Chess.Resources.Pieces">
 
     <BitmapImage x:Key="WPawn" UriSource="/Resources/Images/wpawn.png"/>
     <BitmapImage x:Key="WKnight" UriSource="/Resources/Images/wknight.png"/>

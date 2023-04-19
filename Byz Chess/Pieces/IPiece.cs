@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Byz_Chess.Pieces
 {
     public interface IPiece
     {
         public Brush Color { get; set; }
-        DrawingBrush DrawingImage { get; }
+        BitmapImage? DrawingImage { get; }
         List<Offset> GetMoves();
     }
 }

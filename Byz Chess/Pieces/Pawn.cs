@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Byz_Chess.Pieces
 {
@@ -20,15 +22,18 @@ namespace Byz_Chess.Pieces
         };
 
         private bool _moved = false;
+
         public Pawn()
         {
             Color = Brushes.DarkRed;
+            DrawingImage = Globals.PiecesDictionary["WPawn"] as BitmapImage;
         }
-        public Brush Color { get; set; }
-        public DrawingBrush DrawingImage { get; }
+
+            public Brush Color { get; set; }
+        public BitmapImage? DrawingImage { get; }
         public List<Offset> GetMoves()
         {
-            if(!_moved) return _initialMoves;
+            if (!_moved) return _initialMoves;
             return _moves;
         }
     }

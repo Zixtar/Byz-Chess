@@ -61,10 +61,6 @@ namespace Byz_Chess.Resources
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Board.PlacePiece(new Pawn(), SelectedPosition);
-            BitmapImage theImage = new BitmapImage
-                (new Uri("D:\\Image.png", UriKind.Absolute));
-            var imgBrush = new ImageBrush(theImage);
-            var drawing = new VisualBrush();
         }
 
         private class PathComparer<T> : IComparer<PositionUC>

@@ -83,7 +83,7 @@ namespace Byz_Chess.Resources
             typeof(PositionUC)
         );
 
-        public ImageSource Piece
+        public ImageSource? Piece
         {
             get => (ImageSource)GetValue(PieceProperty);
             set => SetValue(PieceProperty, value);
@@ -93,21 +93,6 @@ namespace Byz_Chess.Resources
         {
             DataContext = this;
             InitializeComponent();
-        }
-
-        public class DebugDummyConverter : IValueConverter
-        {
-            public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-            {
-                Debugger.Break();
-                return value;
-            }
-
-            public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-            {
-                Debugger.Break();
-                return value;
-            }
         }
     }
 }

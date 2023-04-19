@@ -24,7 +24,7 @@ namespace Byz_Chess
             set
             {
                 _piece = value;
-                Color = Piece.Color;
+                Drawing.Piece = Piece != null ? Piece.DrawingImage : null;
             }
         }
 
