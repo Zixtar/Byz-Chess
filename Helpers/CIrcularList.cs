@@ -42,15 +42,22 @@ namespace Helpers
         {
             get
             {
-                return _items[index % Count];
+                return _items[Mod(index, Count)];
             }
 
             set
             {
-                _items[index % Count] = value;
+                _items[Mod(index,Count)] = value;
                 _version++;
             }
         }
+
+        private static int Mod(int x, int m)
+        {
+            var r = x % m;
+            return r < 0 ? r + m : r;
+        }
+
         public new IEnumerator<T> GetEnumerator()
         {
             return new CircularEnumerator<T>(this);

@@ -15,21 +15,40 @@ namespace Byz_Chess.Pieces
         {
             new Offset(0,1),
             new Offset(0,2),
+            new Offset(1,1, true),
+            new Offset(-1,1, true),
         };
         private readonly List<Offset> _moves = new()
         {
-            new Offset(0,1)
+            new Offset(0,1),
+            new Offset(1,1, true),
+            new Offset(-1,1, true),
         };
 
         private bool _moved = false;
 
-        public Pawn()
+        public void Moved()
         {
-            Color = Brushes.DarkRed;
-            DrawingImage = Globals.PiecesDictionary["WPawn"] as BitmapImage;
+            _moved = true;
         }
 
-            public Brush Color { get; set; }
+        public bool Grounded => true;
+        public int Team { get; }
+
+        public Pawn(int team)
+        {
+            Color = Brushes.DarkRed;
+            Team = team;
+            DrawingImage = team switch
+            {
+                1 => Globals.PiecesDictionary["WPawn"] as BitmapImage,
+                2 => Globals.PiecesDictionary["BPawn"] as BitmapImage,
+                _ => DrawingImage
+            };
+        }
+
+        public bool SideConscious => true;
+        public Brush Color { get; set; }
         public BitmapImage? DrawingImage { get; }
         public List<Offset> GetMoves()
         {

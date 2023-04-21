@@ -10,11 +10,18 @@ namespace Byz_Chess.Pieces
     {
         public int row;
         public int col;
+        public bool taking = false;
 
         public Offset(int row, int col)
         {
             this.row = row;
             this.col = col;
+        }
+        public Offset(int row, int col,bool taking)
+        {
+            this.row = row;
+            this.col = col;
+            this.taking = taking;
         }
     }
 }

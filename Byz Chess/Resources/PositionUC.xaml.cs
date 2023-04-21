@@ -1,5 +1,8 @@
 ﻿using System.Diagnostics;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,7 +14,7 @@ namespace Byz_Chess.Resources
     /// <summary>
     /// Interaction logic for PositionUC.xaml
     /// </summary>
-    public partial class PositionUC : UserControl
+    public partial class PositionUC : UserControl, INotifyPropertyChanged
     {
         public static readonly DependencyProperty StretchProperty = DependencyProperty.Register(
             nameof(Stretch), typeof(Stretch),
@@ -89,10 +92,37 @@ namespace Byz_Chess.Resources
             set => SetValue(PieceProperty, value);
         }
 
+        private bool _moveShadow = false;
+
+        public bool MoveShadow
+        {
+            get => _moveShadow;
+            set
+            {
+                _moveShadow = value;
+                OnPropertyChanged();
+            }
+        }
+
         public PositionUC()
         {
             DataContext = this;
             InitializeComponent();
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }

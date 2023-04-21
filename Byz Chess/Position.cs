@@ -14,7 +14,18 @@ namespace Byz_Chess
         public static Position Empty => new Position();
         public Brush? Color;
         public Resources.PositionUC? Drawing;
-        public string Name => Drawing.Name;
+        private string Name => Drawing.Name;
+        public int Row => Name.First() - 'A';
+        public bool MoveShadow
+        {
+            get => Drawing != null && Drawing.MoveShadow;
+            set
+            {
+                if (Drawing != null) Drawing.MoveShadow = value;
+            }
+        }
+
+        public int Column => Convert.ToInt32(Name[1..]) - 1;
 
         private IPiece _piece;
 
@@ -30,7 +41,7 @@ namespace Byz_Chess
 
         public IEnumerable<Offset> GetMoves()
         {
-            if(Piece == null) return Enumerable.Empty<Offset>();
+            if (Piece == null) return Enumerable.Empty<Offset>();
             return Piece.GetMoves();
         }
     }

@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolConv"/>
+    </UserControl.Resources>
     <Path Name="Path" 
           Height="{Binding Path=Height}"
           Width="{Binding Path=Width}"
@@ -25,6 +28,15 @@
                            HorizontalAlignment="Center"
                            Height="40"
                            Width="40"/>
+                        <Ellipse Height="15" Width="15" Visibility="{Binding Path=MoveShadow, Converter={StaticResource BoolConv}}">
+                            <Ellipse.Effect>
+                                <DropShadowEffect BlurRadius="20" />
+                            </Ellipse.Effect>
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="Black" Opacity="0.7">
+                                </SolidColorBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
                     </Grid>
                 </VisualBrush.Visual>
             </VisualBrush>

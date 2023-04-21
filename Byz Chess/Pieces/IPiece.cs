@@ -10,7 +10,10 @@ namespace Byz_Chess.Pieces
 {
     public interface IPiece
     {
+        public bool SideConscious { get; }
         public Brush Color { get; set; }
+        public bool Grounded { get; }
+        public int Team { get; }
         BitmapImage? DrawingImage { get; }
         List<Offset> GetMoves();
     }

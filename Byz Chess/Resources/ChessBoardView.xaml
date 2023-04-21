@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Byz_Chess.Resources"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="789" d:DesignWidth="790"
              >
     <UserControl.Resources>
         <ResourceDictionary Source="Pieces.xaml"></ResourceDictionary>
@@ -110,9 +110,9 @@
         <local:PositionUC MouseLeftButtonUp="Cell_MouseDown" Tag="Position" x:Name="C8" Width="123.108" Height="73.4322" Canvas.Left="393.669" Canvas.Top="71.8091" Stretch="Fill" StrokeThickness="2.3799" StrokeMiterLimit="2.75" Stroke="#FF000000" Fill="#FFD38D5F" Data="F1 M 485.422,140.171C 471.917,135.238 453.381,130.447 438.485,128.04C 428.173,126.374 405.282,124.243 397.469,124.218L 394.859,124.207L 394.859,72.999L 404.578,73.0083C 423.974,73.0297 451.625,76.947 475.078,82.999C 488.083,86.3576 514.042,95.071 515.558,96.5923C 516.433,97.4616 497.573,144.202 496.406,144.051C 496.105,144.014 491.162,142.27 485.422,140.171 Z "/>
         <local:PositionUC MouseLeftButtonUp="Cell_MouseDown" Tag="Position" x:Name="D7" Width="139.161" Height="116.56" Canvas.Left="522.881" Canvas.Top="45.6149" Stretch="Fill" Fill="#FFD38D5F" Data="F1 M 621.954,158.27C 610.958,146.868 583.75,125.967 565.474,114.884C 555.214,108.66 534.531,97.8523 526.438,94.4883C 524.485,93.675 522.881,92.7269 522.881,92.3789C 522.881,91.6963 541.845,46.1804 542.349,45.6444C 542.933,45.0297 562.255,54.155 574.567,60.863C 604.682,77.2643 630.839,96.223 654.813,119.019L 662.042,125.89L 643.881,144.035L 625.719,162.175"/>
         <Path x:Name="Path96" Width="141.541" Height="118.94" Canvas.Left="521.691" Canvas.Top="44.425" Stretch="Fill" StrokeThickness="2.3799" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 625.905,162.143C 614.909,150.742 583.75,125.967 565.474,114.884C 555.214,108.66 534.531,97.8523 526.438,94.4883C 524.485,93.675 522.881,92.7269 522.881,92.3789C 522.881,91.6963 541.845,46.1804 542.349,45.6444C 542.933,45.0297 562.255,54.155 574.567,60.863C 604.682,77.2643 630.839,96.223 654.813,119.019L 662.042,125.89L 643.881,144.035L 625.719,162.175"/>
-        <local:PositionUC MouseLeftButtonUp="Cell_MouseDown" Fill="#FFD38D5F" Piece="{StaticResource WPawn}" Tag="Position" x:Name="D9"  Width="142.922" Height="77.5679" Canvas.Left="250.283" Canvas.Top="13.673" Stretch="Fill" StrokeThickness="2.3799" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 260.963,68.0043C 255.906,55.8843 251.635,45.347 251.479,44.5817C 250.922,41.8989 286.526,29.947 311.881,24.3003C 333.282,19.5404 355.583,16.5869 378.198,15.5137L 392.015,14.863L 392.015,67.0297L 376.605,67.5869C 345.277,68.723 314.922,74.639 283.386,85.7643C 276.673,88.1283 270.949,90.0602 270.667,90.051C 270.386,90.0456 266.021,80.1229 260.963,68.0043 Z ">
+        <local:PositionUC MouseLeftButtonUp="Cell_MouseDown" Fill="#FFD38D5F" Tag="Position" x:Name="D9"  Width="142.922" Height="77.5679" Canvas.Left="250.283" Canvas.Top="13.673" Stretch="Fill" StrokeThickness="2.3799" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 260.963,68.0043C 255.906,55.8843 251.635,45.347 251.479,44.5817C 250.922,41.8989 286.526,29.947 311.881,24.3003C 333.282,19.5404 355.583,16.5869 378.198,15.5137L 392.015,14.863L 392.015,67.0297L 376.605,67.5869C 345.277,68.723 314.922,74.639 283.386,85.7643C 276.673,88.1283 270.949,90.0602 270.667,90.051C 270.386,90.0456 266.021,80.1229 260.963,68.0043 Z ">
         </local:PositionUC>
-        <Button Click="Button_Click" Height="50" Width="100">
+        <Button Click="Button_Click" Height="50" Width="100" Canvas.Left="14" Canvas.Top="17">
 
         </Button>
     </Canvas>
