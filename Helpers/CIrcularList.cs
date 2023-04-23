@@ -52,7 +52,7 @@ namespace Helpers
             }
         }
 
-        private static int Mod(int x, int m)
+        public static int Mod(int x, int m)
         {
             var r = x % m;
             return r < 0 ? r + m : r;

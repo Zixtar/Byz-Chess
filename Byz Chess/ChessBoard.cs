@@ -119,37 +119,8 @@ namespace Byz_Chess
             var position = Positions[SelectedPosition.Row + move.row][SelectedPosition.Column + move.col];
             if (SelectedPosition.Piece.Grounded)
             {
-                var blocked = 0;
-                if (move.col == 0)
-                {
-                    for (int i = SelectedPosition.Row + 1; i < position.Row; i++)
-                        if (Positions[i][SelectedPosition.Column].Piece != null)
-                        {
-                            blocked++;
-                            break;
-                        }
-                    if (blocked == 1)
-                        for (int i = position.Row - 1; i < SelectedPosition.Row; i--)
-                            if (Positions[i][SelectedPosition.Column].Piece != null)
-                            {
-                                return false;
-                            }
-                }
-                if (move.row == 0)
-                {
-                    for (int i = SelectedPosition.Column + 1; i < position.Column; i++)
-                        if (Positions[SelectedPosition.Row][i].Piece != null)
-                        {
-                            blocked++;
-                            break;
-                        }
-                    if (blocked == 1)
-                        for (int i = position.Column + 1; i < SelectedPosition.Column; i++)
-                            if (Positions[SelectedPosition.Row][i].Piece != null)
-                            {
-                                return false;
-                            }
-                }
+                if (!ValidMoveForGrouded(move, position))
+                    return false;
             }
             if (position.Piece == null)
             {
@@ -162,14 +133,67 @@ namespace Byz_Chess
                 return move.taking == true;
             }
             return true;
+
+        }
+
+        private bool ValidMoveForGrouded(Offset move, Position position)  //This will only work for rook but it's ok since he is the only grounded piece
+        {
+            var positionsToCheck = new CircularList<Position>();
+            var blocked = false;
+            if (move.row == 0)
+            {
+                var start = SelectedPosition.Column;
+                var end = position.Column;
+                positionsToCheck = Positions[SelectedPosition.Row];
+                blocked = CheckPath(start, end, positionsToCheck.Count) && CheckPath(end, start, positionsToCheck.Count);
+
+            }
+            if (move.col == 0)
+            {
+                var start = SelectedPosition.Row;
+                var end = position.Row;
+                positionsToCheck = new CircularList<Position>()
+                {
+                    Positions[0][SelectedPosition.Column],
+                    Positions[1][SelectedPosition.Column],
+                    Positions[2][SelectedPosition.Column],
+                    Positions[3][SelectedPosition.Column]
+
+            };
+                if (start < end)
+                {
+                    blocked = CheckPath(start, end, positionsToCheck.Count);
+                }
+                else
+                {
+                    blocked = CheckPath(end, start, positionsToCheck.Count);
+
+                }
+            }
+
+            bool CheckPath(int start, int end, int count)
+            {
+                bool hasPiece = false;
+
+                for (int i = (start + 1) % count; i != end; i = (i + 1) % count)
+                {
+                    if (positionsToCheck[i].Piece != null)
+                    {
+                        hasPiece = true;
+                        break;
+                    }
+                }
+
+                return hasPiece;
+            }
+
+            return !blocked;
         }
 
         public void TryMovePiece(Position position)
         {
             if (!_shownMovesPositions.Contains(position)) return;
 
-            if (SelectedPosition.Piece is Pawn pwn)
-                pwn.Moved();
             position.Piece = SelectedPosition.Piece;
             SelectedPosition.Piece = null;
 
