@@ -10,13 +10,7 @@ namespace Byz_Chess.Pieces
 {
     class Minister : IPiece
     {
-        private readonly List<Offset> _moves = new()
-        {
-            new Offset(1,1),
-            new Offset(1,-1),
-            new Offset(-1,-1),
-            new Offset(-1,1),
-        };
+        public readonly List<Offset> _moves = Globals.MinisterMoves.MovesList;
         public bool SideConscious => false;
         public bool Grounded => false;
         public int Team { get; }

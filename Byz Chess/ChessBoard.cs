@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Byz_Chess.Pieces;
 using Byz_Chess.Resources;
 using Helpers;
@@ -15,14 +18,20 @@ namespace Byz_Chess
 {
     public class ChessBoard
     {
+
         public List<CircularList<Position>> Positions;
 
         public Position SelectedPosition;
         private readonly List<Position> _shownMovesPositions = new();
 
+        public int PlayerToPlay;
+
         public readonly Brush Color1 = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF502D16"));
         public readonly Brush Color2 = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFD38D5F"));
         private readonly Brush[] _colors;
+        public Position[] KingPieces = new Position[3];
+        public List<Position> CheckingPieces = new();
+
         public ChessBoard(IEnumerable<Resources.PositionUC> positions, int height)
         {
             _colors = new Brush[]
@@ -69,7 +78,6 @@ namespace Byz_Chess
         public void ShowPossibleMoves()
         {
             var pieceMoves = SelectedPosition.GetMoves().ToList();
-            ClearShownMoves();
             if (SelectedPosition?.Piece == null) return;
             if (SelectedPosition?.Piece is Pawn)
             {
@@ -101,7 +109,7 @@ namespace Byz_Chess
             }
         }
 
-        private void ClearShownMoves()
+        public void ClearShownMoves()
         {
             foreach (var move in _shownMovesPositions)
             {
@@ -111,13 +119,14 @@ namespace Byz_Chess
         }
 
         //TODO check this
-        private bool ValidMove(Offset move)
+        private bool ValidMove(Offset move, Position startingPosition = null)
         {
-            var positionRow = SelectedPosition.Row + move.row;
-            var onBoard = positionRow < Positions.Count && positionRow >= 0;
-            if (!onBoard) return false;
-            var position = Positions[SelectedPosition.Row + move.row][SelectedPosition.Column + move.col];
-            if (SelectedPosition.Piece.Grounded)
+            if (startingPosition == null)
+                startingPosition = SelectedPosition;
+            if (!IsOnBoard(move, startingPosition)) return false;
+            var position = Positions[startingPosition.Row + move.row][startingPosition.Column + move.col];
+            if (startingPosition.Piece == null) return false; ;
+            if (startingPosition.Piece.Grounded)
             {
                 if (!ValidMoveForGrouded(move, position))
                     return false;
@@ -126,14 +135,22 @@ namespace Byz_Chess
             {
                 return !move.taking;
             }
-            var alliedPiece = position.Piece?.Team == SelectedPosition.Piece?.Team;
+            var alliedPiece = position.Piece?.Team == startingPosition.Piece?.Team;
             if (alliedPiece) return false;
-            if (SelectedPosition.Piece is Pawn)
+            if (startingPosition.Piece is Pawn)
             {
                 return move.taking == true;
             }
             return true;
 
+        }
+
+        private bool IsOnBoard(Offset move, Position startingPosition)
+        {
+            var positionRow = startingPosition.Row + move.row;
+            var onBoard = positionRow < Positions.Count && positionRow >= 0;
+            if (!onBoard) return false;
+            return true;
         }
 
         private bool ValidMoveForGrouded(Offset move, Position position)  //This will only work for rook but it's ok since he is the only grounded piece
@@ -190,13 +207,75 @@ namespace Byz_Chess
             return !blocked;
         }
 
-        public void TryMovePiece(Position position)
+        public bool TryMovePiece(Position position)
         {
-            if (!_shownMovesPositions.Contains(position)) return;
-
+            if (!_shownMovesPositions.Contains(position)) return false;
+            var tempSelectedPosition = SelectedPosition.Piece;
+            var tempNextPosition = position.Piece;
+            var tempKingPosition = new Position();
             position.Piece = SelectedPosition.Piece;
             SelectedPosition.Piece = null;
+            if (position.Piece is King)
+            {
+                tempKingPosition = KingPieces[PlayerToPlay];
+                KingPieces[PlayerToPlay] = position;
+            }
+            if (IsInCheck(KingPieces[PlayerToPlay]))
+            {
+                SelectedPosition.Piece = tempSelectedPosition;
+                position.Piece = tempNextPosition;
+                if (position.Piece is King)
+                {
+                    KingPieces[PlayerToPlay] = tempKingPosition;
+                }
+                FlashKing();
+                return false;
+            }
 
+            return true;
+        }
+
+        private bool IsInCheck(Position kingPiece)
+        {
+            CheckingPieces.Clear();
+            foreach (var moveSet in Globals.AllPossibleMoves)
+            {
+                foreach (var move in moveSet.MovesList)
+                {
+                    var position = new Position();
+                    if (moveSet.ClassType == typeof(Pawn))
+                    {
+                        if (kingPiece.Row - move.row > 0)
+                        {
+                            position = Positions[kingPiece.Row - move.row][kingPiece.Column - move.col];
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (!IsOnBoard(move, kingPiece)) continue;
+                        position = Positions[kingPiece.Row + move.row][kingPiece.Column + move.col];
+                    }
+                    if (ValidMove(move, position) && moveSet.ClassType == position.Piece?.GetType() && position.Piece.Team != PlayerToPlay)
+                        CheckingPieces.Add(position);
+                }
+            }
+
+            return CheckingPieces.Count > 0;
+        }
+
+        public void FlashKing()
+        {
+            KingPieces[PlayerToPlay].Drawing.Fill = Brushes.Red;
+            Task.Delay(1000);
+            KingPieces[PlayerToPlay].Drawing.Fill = KingPieces[PlayerToPlay].Color;
+            Task.Delay(1000);
+            KingPieces[PlayerToPlay].Drawing.Fill = Brushes.Red;
+            Task.Delay(1000);
+            KingPieces[PlayerToPlay].Drawing.Fill = KingPieces[PlayerToPlay].Color;
         }
     }
 }

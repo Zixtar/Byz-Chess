@@ -8,19 +8,9 @@ using System.Windows.Media.Imaging;
 
 namespace Byz_Chess.Pieces
 {
-    class King : IPiece
+    public class King : IPiece
     {
-        private readonly List<Offset> _moves = new()
-        {
-            new Offset(0,1),
-            new Offset(0,-1),
-            new Offset(1,1),
-            new Offset(1,0),
-            new Offset(1,-1),
-            new Offset(-1,-1),
-            new Offset(-1,0),
-            new Offset(-1,1),
-        };
+        public readonly List<Offset> _moves = Globals.KingMoves.MovesList;
         public bool SideConscious => false;
         public bool Grounded => false;
         public int Team { get; }

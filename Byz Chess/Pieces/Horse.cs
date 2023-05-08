@@ -10,17 +10,7 @@ namespace Byz_Chess.Pieces
 {
     class Horse : IPiece
     {
-        private readonly List<Offset> _moves = new()
-        {
-            new Offset(2,1),
-            new Offset(1,2),
-            new Offset(2,-1),
-            new Offset(-1,2),
-            new Offset(-2,1),
-            new Offset(1,-2),
-            new Offset(-2,-1),
-            new Offset(-1,-2),
-        };
+        public static readonly List<Offset> _moves = Globals.HorseMoves.MovesList;
         public bool SideConscious => false;
         public bool Grounded => false;
         public int Team { get; }

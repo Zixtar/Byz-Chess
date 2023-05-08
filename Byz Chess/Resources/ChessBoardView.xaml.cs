@@ -15,19 +15,28 @@ namespace Byz_Chess.Resources
     public partial class ChessBoardView : UserControl
     {
         public ChessBoard Board;
-
         public bool GameStarted = false;
+        private const int TeamsToggle = 1 ^ 2;
+
         private Position SelectedPosition
         {
             get => Board.SelectedPosition;
             set
             {
-                Board.TryMovePiece(value);
+                if (Board.TryMovePiece(value))
+                {
+                    Board.PlayerToPlay ^= TeamsToggle;
+                }
+                Board.ClearShownMoves();
+
                 if (SelectedPosition.Drawing != null) SelectedPosition.Drawing.Fill = SelectedPosition.Color;
                 Board.SelectedPosition = value;
                 if (SelectedPosition.Drawing != null) SelectedPosition.Drawing.Fill = Brushes.GreenYellow;
 
-                Board.ShowPossibleMoves();
+                if (SelectedPosition?.Piece?.Team == Board.PlayerToPlay)
+                {
+                    Board.ShowPossibleMoves();
+                }
             }
         }
 
@@ -89,7 +98,6 @@ namespace Byz_Chess.Resources
             Board.PlacePiece(new Pawn(1), Board.Positions[2][1]);
             Board.PlacePiece(new Pawn(1), Board.Positions[3][1]);
 
-
             Board.PlacePiece(new Pawn(2), Board.Positions[0][9]);
             Board.PlacePiece(new Pawn(2), Board.Positions[1][9]);
             Board.PlacePiece(new Pawn(2), Board.Positions[2][9]);
@@ -107,6 +115,11 @@ namespace Byz_Chess.Resources
             Board.PlacePiece(new Pawn(2), Board.Positions[2][6]);
             Board.PlacePiece(new Pawn(2), Board.Positions[3][6]);
 
+            Board.KingPieces[1] = Board.Positions[0][-1];
+            Board.KingPieces[2] = Board.Positions[0][8];
+
+
+            Board.PlayerToPlay = 1;
         }
     }
 }

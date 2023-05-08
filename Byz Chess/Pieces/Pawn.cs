@@ -11,12 +11,7 @@ namespace Byz_Chess.Pieces
 {
     internal class Pawn : IPiece
     {
-        private readonly List<Offset> _moves = new()
-        {
-            new Offset(0,1),
-            new Offset(1,1, true),
-            new Offset(-1,1, true),
-        };
+        public readonly List<Offset> _moves = Globals.PawnMoves.MovesList;
         
         public bool Grounded => false;
         public int Team { get; }

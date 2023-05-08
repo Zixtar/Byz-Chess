@@ -40,10 +40,7 @@ namespace Helpers
         }
         public new T this[int index]
         {
-            get
-            {
-                return _items[Mod(index, Count)];
-            }
+            get => _items[Mod(index, Count)];
 
             set
             {
