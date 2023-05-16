@@ -87,7 +87,13 @@ namespace Helpers
 
             public bool MoveNext()
             {
-                _index = (_index + 1) % _list.Count;
+
+                _index = _index + 1;
+                if (_index == _list.Count)
+                {
+                    _index--;
+                    return false;
+                }
                 return true;
             }
 

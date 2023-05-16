@@ -22,7 +22,6 @@ namespace Byz_Chess
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-
         public bool GameStopped
         {
             get => !ChessBoard.GameStarted;
@@ -40,6 +39,7 @@ namespace Byz_Chess
         private void TestingBtn_Click(object sender, RoutedEventArgs e)
         {
             GameStopped = false;
+            ChessBoard.TestingBoard();
         }
 
         private void StandardBtn_Click(object sender, RoutedEventArgs e)

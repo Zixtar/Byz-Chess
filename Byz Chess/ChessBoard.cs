@@ -224,7 +224,7 @@ namespace Byz_Chess
             {
                 SelectedPosition.Piece = tempSelectedPosition;
                 position.Piece = tempNextPosition;
-                if (position.Piece is King)
+                if (SelectedPosition.Piece is King)
                 {
                     KingPieces[PlayerToPlay] = tempKingPosition;
                 }
@@ -258,6 +258,7 @@ namespace Byz_Chess
                     {
                         if (!IsOnBoard(move, kingPiece)) continue;
                         position = Positions[kingPiece.Row + move.row][kingPiece.Column + move.col];
+                        var newMove = new Offset(-move.row, -move.col);
                     }
                     if (ValidMove(move, position) && moveSet.ClassType == position.Piece?.GetType() && position.Piece.Team != PlayerToPlay)
                         CheckingPieces.Add(position);
@@ -266,7 +267,76 @@ namespace Byz_Chess
 
             return CheckingPieces.Count > 0;
         }
+        public bool IsCheckMate()
+        {
+            if (!IsInCheck(KingPieces[PlayerToPlay]))
+                return false;
+            foreach (var column in Positions)
+            {
+                foreach (var position in column)
+                {
+                    if (position.Piece?.Team == PlayerToPlay)
+                    {
+                        foreach (var move in position.GetMoves())
+                        {
+                            var trueMove = move;
+                            if (position?.Piece is Pawn)
+                            {
+                                var mirror = Convert.ToInt32((position?.Piece as Pawn).Team == 2) +
+                                             Convert.ToInt32((position.Column > Positions.First().Count / 2 - 1));
+                                if (position.Piece.SideConscious && mirror % 2 == 1)
+                                {
+                                    trueMove = new Offset(move.row, -move.col, move.taking);
+                                }
+                            }
 
+                            if (ValidMove(trueMove, position))
+                            {
+                                SelectedPosition = position;
+                                var tempPositionPiece = position.Piece;
+                                var pos = Positions[position.Row + trueMove.row][position.Column + trueMove.col];
+                                var tempNewPositionPiece = pos.Piece;
+                                var tempKingPosition = new Position();
+                                if (position.Piece is King)
+                                {
+                                    tempKingPosition = KingPieces[PlayerToPlay];
+                                }
+                                var moved = TryMovePiece(pos);
+
+                                if (!IsInCheck(KingPieces[PlayerToPlay]))
+                                {
+                                    if (moved)
+                                    {
+                                        SelectedPosition.Piece = tempPositionPiece;
+                                        pos.Piece = tempNewPositionPiece;
+                                        if (position.Piece is King)
+                                        {
+                                            KingPieces[PlayerToPlay] = tempKingPosition;
+                                        }
+
+                                    }
+
+                                    return false;
+                                }
+
+                                if (moved)
+                                {
+                                    SelectedPosition.Piece = tempPositionPiece;
+                                    pos.Piece = tempNewPositionPiece;
+                                    if (position.Piece is King)
+                                    {
+                                        KingPieces[PlayerToPlay] = tempKingPosition;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        //Does not work
         public void FlashKing()
         {
             KingPieces[PlayerToPlay].Drawing.Fill = Brushes.Red;
@@ -276,6 +346,17 @@ namespace Byz_Chess
             KingPieces[PlayerToPlay].Drawing.Fill = Brushes.Red;
             Task.Delay(1000);
             KingPieces[PlayerToPlay].Drawing.Fill = KingPieces[PlayerToPlay].Color;
+        }
+
+        public void ClearPositions()
+        {
+            foreach (var row in Positions)
+            {
+                foreach (var position in row)
+                {
+                    position.Piece = null;
+                }
+            }
         }
     }
 }

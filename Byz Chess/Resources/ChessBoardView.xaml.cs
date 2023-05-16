@@ -26,6 +26,12 @@ namespace Byz_Chess.Resources
                 if (Board.TryMovePiece(value))
                 {
                     Board.PlayerToPlay ^= TeamsToggle;
+                    if (Board.IsCheckMate())
+                    {
+                        Board.ClearPositions();
+                        GameStarted = false;
+                        ArrangeStandardBoard();
+                    }
                 }
                 Board.ClearShownMoves();
 
@@ -112,6 +118,48 @@ namespace Byz_Chess.Resources
             Board.PlacePiece(new Rook(2), Board.Positions[3][7]);
             Board.PlacePiece(new Pawn(2), Board.Positions[0][6]);
             Board.PlacePiece(new Pawn(2), Board.Positions[1][6]);
+            Board.PlacePiece(new Pawn(2), Board.Positions[2][6]);
+            Board.PlacePiece(new Pawn(2), Board.Positions[3][6]);
+
+            Board.KingPieces[1] = Board.Positions[0][-1];
+            Board.KingPieces[2] = Board.Positions[0][8];
+
+
+            Board.PlayerToPlay = 1;
+        }
+
+        public void TestingBoard()
+        {
+            Board.PlacePiece(new Pawn(1), Board.Positions[0][-2]);
+            Board.PlacePiece(new Pawn(1), Board.Positions[1][-2]);
+            Board.PlacePiece(new Pawn(1), Board.Positions[2][-2]);
+            Board.PlacePiece(new Pawn(1), Board.Positions[3][-2]);
+            Board.PlacePiece(new King(1), Board.Positions[0][-1]);
+            Board.PlacePiece(new Elephant(1), Board.Positions[1][-1]);
+            Board.PlacePiece(new Horse(1), Board.Positions[2][-1]);
+            Board.PlacePiece(new Rook(1), Board.Positions[3][-1]);
+            Board.PlacePiece(new Minister(1), Board.Positions[0][0]);
+            Board.PlacePiece(new Elephant(2), Board.Positions[3][5]);
+            Board.PlacePiece(new Horse(1), Board.Positions[2][5]);
+            Board.PlacePiece(new Rook(1), Board.Positions[3][0]);
+            Board.PlacePiece(new Pawn(1), Board.Positions[0][1]);
+            Board.PlacePiece(new Pawn(1), Board.Positions[1][1]);
+            Board.PlacePiece(new Pawn(1), Board.Positions[2][1]);
+            Board.PlacePiece(new Pawn(1), Board.Positions[3][1]);
+
+            Board.PlacePiece(new Pawn(2), Board.Positions[0][9]);
+            Board.PlacePiece(new Pawn(2), Board.Positions[1][9]);
+            Board.PlacePiece(new Pawn(2), Board.Positions[2][9]);
+            Board.PlacePiece(new Pawn(2), Board.Positions[3][9]);
+            Board.PlacePiece(new King(2), Board.Positions[0][8]);
+            Board.PlacePiece(new Elephant(2), Board.Positions[1][8]);
+            Board.PlacePiece(new Horse(2), Board.Positions[2][8]);
+            Board.PlacePiece(new Rook(2), Board.Positions[3][8]);
+            Board.PlacePiece(new Minister(2), Board.Positions[0][7]);
+            Board.PlacePiece(new Horse(2), Board.Positions[2][7]);
+            Board.PlacePiece(new Rook(2), Board.Positions[3][7]);
+            Board.PlacePiece(new Pawn(2), Board.Positions[0][6]);
+            Board.PlacePiece(new Pawn(1), Board.Positions[1][6]);
             Board.PlacePiece(new Pawn(2), Board.Positions[2][6]);
             Board.PlacePiece(new Pawn(2), Board.Positions[3][6]);
 
