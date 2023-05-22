@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,7 +31,7 @@ namespace Byz_Chess
             set => _piecesDictionary = value;
         }
 
-        public static readonly Moves RookMoves = new Moves
+        public static readonly Moves RookMoves = new()
         {
             ClassType = typeof(Rook),
             MovesList = new List<Offset>
@@ -57,7 +59,7 @@ namespace Byz_Chess
                 new Offset(-3, 0)
             }
         };
-        public static readonly Moves PawnMoves = new Moves
+        public static readonly Moves PawnMoves = new()
         {
             ClassType = typeof(Pawn),
             MovesList = new List<Offset>
@@ -67,7 +69,7 @@ namespace Byz_Chess
                 new Offset(-1,1, true),
             }
         };
-        public static readonly Moves MinisterMoves = new Moves
+        public static readonly Moves MinisterMoves = new()
         {
             ClassType = typeof(Minister),
             MovesList = new List<Offset>
@@ -78,7 +80,7 @@ namespace Byz_Chess
                 new Offset(-1,1),
             }
         };
-        public static readonly Moves KingMoves = new Moves
+        public static readonly Moves KingMoves = new()
         {
             ClassType = typeof(King),
             MovesList = new List<Offset>
@@ -93,7 +95,7 @@ namespace Byz_Chess
                 new Offset(-1,1),
             }
         };
-        public static readonly Moves HorseMoves = new Moves
+        public static readonly Moves HorseMoves = new()
         {
             ClassType = typeof(Horse),
             MovesList = new List<Offset>
@@ -108,7 +110,7 @@ namespace Byz_Chess
                 new Offset(-1,-2),
             }
         };
-        public static readonly Moves ElephantMoves = new Moves
+        public static readonly Moves ElephantMoves = new()
         {
             ClassType = typeof(Elephant),
             MovesList = new List<Offset>
@@ -121,8 +123,9 @@ namespace Byz_Chess
             }
         };
 
-        public static List<Moves> AllPossibleMoves = new List<Moves> { RookMoves, PawnMoves, MinisterMoves, KingMoves, HorseMoves, ElephantMoves };
-
+        public static List<Moves> AllPossibleMoves = new() { RookMoves, PawnMoves, MinisterMoves, KingMoves, HorseMoves, ElephantMoves };
+        public static StreamWriter ScriereServer;
+        public static NetworkStream DateClient;
 
         public class Moves
         {

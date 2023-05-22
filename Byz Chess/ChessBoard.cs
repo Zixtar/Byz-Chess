@@ -207,6 +207,14 @@ namespace Byz_Chess
             return !blocked;
         }
 
+        public void DoOnlineMove(int selectedRow, int selectedColumn, int newRow, int newColumn)
+        {
+            SelectedPosition = Positions[selectedRow][selectedColumn];
+            ShowPossibleMoves();
+            TryMovePiece(Positions[newRow][newColumn]);
+            ClearShownMoves();
+        }
+
         public bool TryMovePiece(Position position)
         {
             if (!_shownMovesPositions.Contains(position)) return false;

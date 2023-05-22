@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Byz Chess", "Byz Chess\Byz Chess.csproj", "{B9354C17-1F25-42A9-B224-DB9C89D75D4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.csproj", "{0F95A7EA-7B38-44DD-B5FE-32C0BC2097B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpers", "Helpers\Helpers.csproj", "{0F95A7EA-7B38-44DD-B5FE-32C0BC2097B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{3589C0F9-3672-44DF-9735-E49FD3FD4347}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0F95A7EA-7B38-44DD-B5FE-32C0BC2097B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F95A7EA-7B38-44DD-B5FE-32C0BC2097B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F95A7EA-7B38-44DD-B5FE-32C0BC2097B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3589C0F9-3672-44DF-9735-E49FD3FD4347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3589C0F9-3672-44DF-9735-E49FD3FD4347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3589C0F9-3672-44DF-9735-E49FD3FD4347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3589C0F9-3672-44DF-9735-E49FD3FD4347}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

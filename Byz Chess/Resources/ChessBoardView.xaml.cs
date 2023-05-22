@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,8 @@ namespace Byz_Chess.Resources
         public ChessBoard Board;
         public bool GameStarted = false;
         private const int TeamsToggle = 1 ^ 2;
+        public int PlayerNr;
+        public bool Online = false;
 
         private Position SelectedPosition
         {
@@ -28,11 +31,19 @@ namespace Byz_Chess.Resources
                     Board.PlayerToPlay ^= TeamsToggle;
                     if (Board.IsCheckMate())
                     {
-                        Board.ClearPositions();
-                        GameStarted = false;
-                        ArrangeStandardBoard();
+                        if (Online)
+                        {
+                            Globals.ScriereServer.WriteLine("F");
+                        }
+                        ResetGame();
+                    }
+
+                    if (Online)
+                    {
+                        Globals.ScriereServer.WriteLine($"M{SelectedPosition.Row}{SelectedPosition.Column}|{value.Row}{value.Column}");
                     }
                 }
+
                 Board.ClearShownMoves();
 
                 if (SelectedPosition.Drawing != null) SelectedPosition.Drawing.Fill = SelectedPosition.Color;
@@ -41,10 +52,36 @@ namespace Byz_Chess.Resources
 
                 if (SelectedPosition?.Piece?.Team == Board.PlayerToPlay)
                 {
-                    Board.ShowPossibleMoves();
+                    if (Online)
+                    {
+                        if (PlayerNr == Board.PlayerToPlay)
+                        {
+                            Board.ShowPossibleMoves();
+                        }
+                    }
+                    else
+                    {
+                        Board.ShowPossibleMoves();
+                    }
+
                 }
             }
         }
+
+        public void ResetGame()
+        {
+            Board.ClearPositions();
+            GameStarted = false;
+            ArrangeStandardBoard();
+        }
+
+        public void DoOnlineMove(int selectedRow, int selectedColumn, int newRow, int newColumn)
+        {
+            if (SelectedPosition.Drawing != null) SelectedPosition.Drawing.Fill = SelectedPosition.Color;
+            Board.DoOnlineMove(selectedRow, selectedColumn, newRow, newColumn);
+            Board.PlayerToPlay ^= TeamsToggle;
+        }
+
 
         public ChessBoardView()
         {

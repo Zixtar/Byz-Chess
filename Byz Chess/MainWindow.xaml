@@ -14,96 +14,161 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolConv"/>
     </Window.Resources>
-    <StackPanel Orientation="Horizontal">
-        <resources:ChessBoardView x:Name="ChessBoard" BorderThickness="0,0,3,0">
-            <resources:ChessBoardView.BorderBrush >
-                <SolidColorBrush Color="SlateGray" Opacity="0.5"></SolidColorBrush>
-            </resources:ChessBoardView.BorderBrush>
-        </resources:ChessBoardView>
-        <Grid x:Name="ControlsPanel" Width="409">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
-                <RowDefinition Height="450"/>
-                <RowDefinition Height="200"/>
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="1" Orientation="Vertical">
-                <Button x:Name="TestingBtn" Margin="10,10,10,10"
+    <Grid>
+
+        <StackPanel Orientation="Horizontal">
+            <resources:ChessBoardView x:Name="ChessBoard" BorderThickness="0,0,3,0">
+                <resources:ChessBoardView.BorderBrush >
+                    <SolidColorBrush Color="SlateGray" Opacity="0.5"></SolidColorBrush>
+                </resources:ChessBoardView.BorderBrush>
+            </resources:ChessBoardView>
+            <Grid x:Name="ControlsPanel" Width="409">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="450"/>
+                    <RowDefinition Height="200"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="1" Grid.Row="0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Player: " FontWeight="Bold" FontSize="15"></TextBlock>
+                        <TextBlock x:Name="PlayerNr" FontWeight="Bold" FontSize="15"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
+                    <Button x:Name="TestingBtn" Margin="10,10,10,10"
                                 Content="Testing"
                                 Visibility="{Binding Path=GameStopped,Mode=TwoWay, Converter={StaticResource BoolConv}}"
                                 FontSize="20"
                                 FontWeight="Bold"
                                 Height="50"
                                 Click="TestingBtn_Click">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Foreground" Value="Wheat"/>
-                            <Setter Property="Background" Value="DarkBlue"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="10"></Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="BorderBrush" Value="DeepPink"/>
-                                    <Setter Property="BorderThickness" Value="2"></Setter>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Resources>
-
-                </Button>
-                <Button x:Name="StandardBtn" Margin="10,10,10,10" 
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Foreground" Value="Wheat"/>
+                                <Setter Property="Background" Value="DarkBlue"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="BorderBrush" Value="DeepPink"/>
+                                        <Setter Property="BorderThickness" Value="2"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button x:Name="StandardBtn" Margin="10,10,10,10" 
                         Visibility="{Binding Path=GameStopped, Converter={StaticResource BoolConv}}"
                         Content="Standard" 
                         FontSize="20" 
                         FontWeight="Bold" 
                         Height="50" Click="StandardBtn_Click">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Foreground" Value="Wheat"/>
-                            <Setter Property="Background" Value="DarkBlue"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="10"></Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="BorderBrush" Value="DeepPink"/>
-                                    <Setter Property="BorderThickness" Value="2"></Setter>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </StackPanel>
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Foreground" Value="Wheat"/>
+                                <Setter Property="Background" Value="DarkBlue"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="BorderBrush" Value="DeepPink"/>
+                                        <Setter Property="BorderThickness" Value="2"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button x:Name="OnlineConnectBtn" Margin="10,10,10,10"
+                                Content="Connect"
+                                Visibility="{Binding Path=GameStopped,Mode=TwoWay, Converter={StaticResource BoolConv}}"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Height="50"
+                                Click="OnlineConnectBtn_OnClick">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Foreground" Value="Wheat"/>
+                                <Setter Property="Background" Value="DarkBlue"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="BorderBrush" Value="DeepPink"/>
+                                        <Setter Property="BorderThickness" Value="2"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Grid x:Name="InputBox" Visibility="Collapsed">
+            <Grid Background="Black" Opacity="0.5"/>
+            <Border
+                MinWidth="250"
+                Background="DarkBlue" 
+                BorderBrush="Black" 
+                BorderThickness="1" 
+                CornerRadius="0,55,0,55" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Foreground="Wheat" FontSize="12" Margin="5" Text="Input Box:" FontWeight="Bold" FontFamily="Cambria" />
+                    <TextBox MinWidth="150" Text="127.0.0.1" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="InputTextBox"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Foreground="Wheat" x:Name="YesButton" Margin="5" Content="Yes" Background="{x:Null}" Click="YesButton_Click"/>
+                        <Button Foreground="Wheat"  x:Name="NoButton" Margin="5" Content="No" Background="{x:Null}" Click="NoButton_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
         </Grid>
-    </StackPanel>
+    </Grid>
+
 </Window>
