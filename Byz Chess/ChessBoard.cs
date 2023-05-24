@@ -128,7 +128,7 @@ namespace Byz_Chess
             if (startingPosition.Piece == null) return false; ;
             if (startingPosition.Piece.Grounded)
             {
-                if (!ValidMoveForGrouded(move, position))
+                if (!ValidMoveForGrouded(move, position,startingPosition))
                     return false;
             }
             if (position.Piece == null)
@@ -153,28 +153,28 @@ namespace Byz_Chess
             return true;
         }
 
-        private bool ValidMoveForGrouded(Offset move, Position position)  //This will only work for rook but it's ok since he is the only grounded piece
+        private bool ValidMoveForGrouded(Offset move, Position position, Position startingPosition)  //This will only work for rook but it's ok since he is the only grounded piece
         {
             var positionsToCheck = new CircularList<Position>();
             var blocked = false;
             if (move.row == 0)
             {
-                var start = SelectedPosition.Column;
+                var start = startingPosition.Column;
                 var end = position.Column;
-                positionsToCheck = Positions[SelectedPosition.Row];
+                positionsToCheck = Positions[startingPosition.Row];
                 blocked = CheckPath(start, end, positionsToCheck.Count) && CheckPath(end, start, positionsToCheck.Count);
 
             }
             if (move.col == 0)
             {
-                var start = SelectedPosition.Row;
+                var start = startingPosition.Row;
                 var end = position.Row;
                 positionsToCheck = new CircularList<Position>()
                 {
-                    Positions[0][SelectedPosition.Column],
-                    Positions[1][SelectedPosition.Column],
-                    Positions[2][SelectedPosition.Column],
-                    Positions[3][SelectedPosition.Column]
+                    Positions[0][startingPosition.Column],
+                    Positions[1][startingPosition.Column],
+                    Positions[2][startingPosition.Column],
+                    Positions[3][startingPosition.Column]
 
             };
                 if (start < end)
@@ -251,6 +251,7 @@ namespace Byz_Chess
                 foreach (var move in moveSet.MovesList)
                 {
                     var position = new Position();
+                    var newMove = move;
                     if (moveSet.ClassType == typeof(Pawn))
                     {
                         if (kingPiece.Row - move.row > 0)
@@ -266,9 +267,9 @@ namespace Byz_Chess
                     {
                         if (!IsOnBoard(move, kingPiece)) continue;
                         position = Positions[kingPiece.Row + move.row][kingPiece.Column + move.col];
-                        var newMove = new Offset(-move.row, -move.col);
+                        newMove = new Offset(-move.row, -move.col);
                     }
-                    if (ValidMove(move, position) && moveSet.ClassType == position.Piece?.GetType() && position.Piece.Team != PlayerToPlay)
+                    if (ValidMove(newMove, position) && moveSet.ClassType == position.Piece?.GetType() && position.Piece.Team != PlayerToPlay)
                         CheckingPieces.Add(position);
                 }
             }

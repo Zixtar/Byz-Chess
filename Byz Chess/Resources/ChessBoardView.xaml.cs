@@ -28,6 +28,11 @@ namespace Byz_Chess.Resources
             {
                 if (Board.TryMovePiece(value))
                 {
+
+                    if (Online)
+                    {
+                        Globals.ScriereServer.WriteLine($"M{SelectedPosition.Row}{SelectedPosition.Column}|{value.Row}{value.Column}");
+                    }
                     Board.PlayerToPlay ^= TeamsToggle;
                     if (Board.IsCheckMate())
                     {
@@ -38,10 +43,6 @@ namespace Byz_Chess.Resources
                         ResetGame();
                     }
 
-                    if (Online)
-                    {
-                        Globals.ScriereServer.WriteLine($"M{SelectedPosition.Row}{SelectedPosition.Column}|{value.Row}{value.Column}");
-                    }
                 }
 
                 Board.ClearShownMoves();
