@@ -9,18 +9,15 @@ using System.Windows.Media.Imaging;
 
 namespace Byz_Chess.Pieces
 {
-    internal class Pawn : IPiece
+    internal class InversePawn : IPiece
     {
         public List<Offset> _moves
         {
-            get => Globals.PawnMoves.MovesList;
-
+            get => Globals.InversePawnMoves.MovesList;
         }
-
         public bool Grounded => false;
         public int Team { get; }
-
-        public Pawn(int team)
+        public InversePawn(int team)
         {
             Team = team;
             DrawingImage = team switch

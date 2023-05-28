@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Byz_Chess"
         xmlns:resources="clr-namespace:Byz_Chess.Resources"
         mc:Ignorable="d"
-        Title="MainWindow" Height="850" Width="1200"
+        Title="MainWindow" Height="850" Width="1250"
         ResizeMode="CanMinimize"
         BorderThickness="1,1,1,1"
         BorderBrush="SlateGray"
@@ -112,11 +112,126 @@
                     </Button>
                     <Button x:Name="OnlineConnectBtn" Margin="10,10,10,10"
                                 Content="Connect"
-                                Visibility="{Binding Path=GameStopped,Mode=TwoWay, Converter={StaticResource BoolConv}}"
+                                Visibility="{Binding Path=GameStopped,Mode=OneWay, Converter={StaticResource BoolConv}}"
                                 FontSize="20"
                                 FontWeight="Bold"
                                 Height="50"
                                 Click="OnlineConnectBtn_OnClick">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Foreground" Value="Wheat"/>
+                                <Setter Property="Background" Value="DarkBlue"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="BorderBrush" Value="DeepPink"/>
+                                        <Setter Property="BorderThickness" Value="2"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button x:Name="PlayAIBtn" Margin="10,10,10,10"
+                                Content="Play Vs AI"
+                                Visibility="{Binding Path=GameStopped,Mode=OneWay, Converter={StaticResource BoolConv}}"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Height="50"
+                                Click="PlayAIBtn_Click">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Foreground" Value="Wheat"/>
+                                <Setter Property="Background" Value="DarkBlue"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="10"></Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="BorderBrush" Value="DeepPink"/>
+                                        <Setter Property="BorderThickness" Value="2"></Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+                <StackPanel Visibility="{Binding Path=PlayVsAI, Mode=TwoWay, Converter={StaticResource BoolConv}}" Grid.Column="1" Grid.Row="1" Orientation="Vertical">
+                    <Label Content="Color to play" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <CheckBox x:Name="ColorCB" IsChecked="False">
+                            <CheckBox.Resources>
+                                <Style TargetType="{x:Type CheckBox}">
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="BorderBrush" Value="#FF262E34"/>
+                                    <Setter Property="Foreground" Value="#FF262E34"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type CheckBox}">
+                                                <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" Width="15" Height="15"/>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="False">
+                                                        <Setter Property="Background">
+                                                            <Setter.Value>
+                                                                <ImageBrush ImageSource="/Resources/Images/wpawn.png"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter Property="Background">
+                                                            <Setter.Value>
+                                                                <ImageBrush ImageSource="/Resources/Images/bpawn.png"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </CheckBox.Resources>
+                            <CheckBox.LayoutTransform>
+                                <ScaleTransform ScaleX="3" ScaleY="3" />
+                            </CheckBox.LayoutTransform>
+                        </CheckBox>
+                    </StackPanel>
+                    <Label Content="AI depth (difficulty)" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="DifficultyTxT" Text="Input a nr..." HorizontalAlignment="Center" Width="100" BorderThickness="2,2,2,2"/>
+                    <Button x:Name="PlayBtn" Margin="10,10,10,10"
+                                Content="Play"
+                                Visibility="{Binding Path=GameStopped,Mode=OneWay, Converter={StaticResource BoolConv}}"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Height="50"
+                                Click="PlayBtn_Click">
                         <Button.Resources>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Foreground" Value="Wheat"/>

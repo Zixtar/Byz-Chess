@@ -20,6 +20,10 @@ namespace Byz_Chess.Resources
         private const int TeamsToggle = 1 ^ 2;
         public int PlayerNr;
         public bool Online = false;
+        public bool VsAI = false;
+        public int AIdepth = 2;
+        AI Ai;
+        private int _firstThreeMoves = 0;
 
         private Position SelectedPosition
         {
@@ -28,11 +32,26 @@ namespace Byz_Chess.Resources
             {
                 if (Board.TryMovePiece(value))
                 {
-
-                    if (Online)
+                    if (VsAI)
+                    {
+                        Board.PlayerToPlay ^= TeamsToggle;
+                        if (this._firstThreeMoves < 2)
+                        {
+                            Ai.EvaluateRandom(Board);
+                            this._firstThreeMoves += 1;
+                        }
+                        else
+                        {
+                            Ai.EvaluateAI(Board);
+                        }
+                    }
+                    else if (Online)
                     {
                         Globals.ScriereServer.WriteLine($"M{SelectedPosition.Row}{SelectedPosition.Column}|{value.Row}{value.Column}");
                     }
+                    if (SelectedPosition.Drawing != null) SelectedPosition.Drawing.Fill = SelectedPosition.Color;
+                    Board.SelectedPosition = value;
+                    if (SelectedPosition.Drawing != null) SelectedPosition.Drawing.Fill = Brushes.GreenYellow;
                     Board.PlayerToPlay ^= TeamsToggle;
                     if (Board.IsCheckMate())
                     {
@@ -42,7 +61,6 @@ namespace Byz_Chess.Resources
                         }
                         ResetGame();
                     }
-
                 }
 
                 Board.ClearShownMoves();
@@ -125,10 +143,10 @@ namespace Byz_Chess.Resources
 
         public void ArrangeStandardBoard()
         {
-            Board.PlacePiece(new Pawn(1), Board.Positions[0][-2]);
-            Board.PlacePiece(new Pawn(1), Board.Positions[1][-2]);
-            Board.PlacePiece(new Pawn(1), Board.Positions[2][-2]);
-            Board.PlacePiece(new Pawn(1), Board.Positions[3][-2]);
+            Board.PlacePiece(new InversePawn(1), Board.Positions[0][-2]);
+            Board.PlacePiece(new InversePawn(1), Board.Positions[1][-2]);
+            Board.PlacePiece(new InversePawn(1), Board.Positions[2][-2]);
+            Board.PlacePiece(new InversePawn(1), Board.Positions[3][-2]);
             Board.PlacePiece(new King(1), Board.Positions[0][-1]);
             Board.PlacePiece(new Elephant(1), Board.Positions[1][-1]);
             Board.PlacePiece(new Horse(1), Board.Positions[2][-1]);
@@ -154,24 +172,24 @@ namespace Byz_Chess.Resources
             Board.PlacePiece(new Elephant(2), Board.Positions[1][7]);
             Board.PlacePiece(new Horse(2), Board.Positions[2][7]);
             Board.PlacePiece(new Rook(2), Board.Positions[3][7]);
-            Board.PlacePiece(new Pawn(2), Board.Positions[0][6]);
-            Board.PlacePiece(new Pawn(2), Board.Positions[1][6]);
-            Board.PlacePiece(new Pawn(2), Board.Positions[2][6]);
-            Board.PlacePiece(new Pawn(2), Board.Positions[3][6]);
+            Board.PlacePiece(new InversePawn(2), Board.Positions[0][6]);
+            Board.PlacePiece(new InversePawn(2), Board.Positions[1][6]);
+            Board.PlacePiece(new InversePawn(2), Board.Positions[2][6]);
+            Board.PlacePiece(new InversePawn(2), Board.Positions[3][6]);
 
             Board.KingPieces[1] = Board.Positions[0][-1];
             Board.KingPieces[2] = Board.Positions[0][8];
 
-
-            Board.PlayerToPlay = 1;
+            if (VsAI)
+                Ai = new AI(AIdepth, Board.PlayerToPlay);
         }
 
         public void TestingBoard()
         {
-            Board.PlacePiece(new Pawn(1), Board.Positions[0][-2]);
-            Board.PlacePiece(new Pawn(1), Board.Positions[1][-2]);
-            Board.PlacePiece(new Pawn(1), Board.Positions[2][-2]);
-            Board.PlacePiece(new Pawn(1), Board.Positions[3][-2]);
+            Board.PlacePiece(new InversePawn(1), Board.Positions[0][-2]);
+            Board.PlacePiece(new InversePawn(1), Board.Positions[1][-2]);
+            Board.PlacePiece(new InversePawn(1), Board.Positions[2][-2]);
+            Board.PlacePiece(new InversePawn(1), Board.Positions[3][-2]);
             Board.PlacePiece(new King(1), Board.Positions[0][-1]);
             Board.PlacePiece(new Elephant(1), Board.Positions[1][-1]);
             Board.PlacePiece(new Horse(1), Board.Positions[2][-1]);
@@ -196,16 +214,13 @@ namespace Byz_Chess.Resources
             Board.PlacePiece(new Minister(2), Board.Positions[0][7]);
             Board.PlacePiece(new Horse(2), Board.Positions[2][7]);
             Board.PlacePiece(new Rook(2), Board.Positions[3][7]);
-            Board.PlacePiece(new Pawn(2), Board.Positions[0][6]);
+            Board.PlacePiece(new InversePawn(2), Board.Positions[0][6]);
             Board.PlacePiece(new Pawn(1), Board.Positions[1][6]);
-            Board.PlacePiece(new Pawn(2), Board.Positions[2][6]);
-            Board.PlacePiece(new Pawn(2), Board.Positions[3][6]);
+            Board.PlacePiece(new InversePawn(2), Board.Positions[2][6]);
+            Board.PlacePiece(new InversePawn(2), Board.Positions[3][6]);
 
             Board.KingPieces[1] = Board.Positions[0][-1];
             Board.KingPieces[2] = Board.Positions[0][8];
-
-
-            Board.PlayerToPlay = 1;
         }
     }
 }

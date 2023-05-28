@@ -31,6 +31,7 @@ namespace Byz_Chess
         private TcpClient client;
         private string DatePrimite;
         private string IPConnect;
+        private bool _playVsAI = false;
 
         public bool GameStopped
         {
@@ -41,6 +42,17 @@ namespace Byz_Chess
                 OnPropertyChanged();
             }
         }
+
+        public bool PlayVsAI
+        {
+            get => _playVsAI;
+            set
+            {
+                _playVsAI = value;
+                OnPropertyChanged();
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -76,13 +88,13 @@ namespace Byz_Chess
         private void OnlineConnectBtn_OnClick(object sender, RoutedEventArgs e)
         {
             InputBox.Visibility = System.Windows.Visibility.Visible;
-
         }
 
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
             InputBox.Visibility = System.Windows.Visibility.Collapsed;
-            OnlineConnectBtn.Visibility = Visibility.Hidden;
+            OnlineConnectBtn.IsEnabled = false;
+            OnlineConnectBtn.Content = "Waiting for player...";
             IPConnect = InputTextBox.Text;
             if (IPConnect != string.Empty) Connect();
             InputTextBox.Text = LocalIP;
@@ -92,8 +104,6 @@ namespace Byz_Chess
         {
             InputBox.Visibility = System.Windows.Visibility.Collapsed;
             InputTextBox.Text = "LocalIP";
-
-
         }
 
         private void Connect()
@@ -144,6 +154,24 @@ namespace Byz_Chess
                         }
                 }
             }
+        }
+
+        private void PlayAIBtn_Click(object sender, RoutedEventArgs e)
+        {
+            PlayVsAI ^= true;
+        }
+
+        private void PlayBtn_Click(object sender, RoutedEventArgs e)
+        {
+            GameStopped = false;
+            ChessBoard.Board.PlayerToPlay = ColorCB.IsChecked == false ? 1 : 2;
+            PlayVsAI ^= true;
+            ChessBoard.VsAI = true;
+            var result = 2;
+            int.TryParse(DifficultyTxT.Text, out result);
+            ChessBoard.AIdepth = result;
+            ChessBoard.ArrangeStandardBoard();
+
         }
     }
 }

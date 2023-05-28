@@ -69,6 +69,17 @@ namespace Byz_Chess
                 new Offset(-1,1, true),
             }
         };
+
+        public static readonly Moves InversePawnMoves = new()
+        {
+            ClassType = typeof(Pawn),
+            MovesList = new List<Offset>
+            {
+                new Offset(0,-1),
+                new Offset(1,-1, true),
+                new Offset(-1,-1, true),
+            }
+        };
         public static readonly Moves MinisterMoves = new()
         {
             ClassType = typeof(Minister),
@@ -123,7 +134,7 @@ namespace Byz_Chess
             }
         };
 
-        public static List<Moves> AllPossibleMoves = new() { RookMoves, PawnMoves, MinisterMoves, KingMoves, HorseMoves, ElephantMoves };
+        public static List<Moves> AllPossibleMoves = new() { RookMoves, PawnMoves, InversePawnMoves, MinisterMoves, KingMoves, HorseMoves, ElephantMoves };
         public static StreamWriter ScriereServer;
         public static NetworkStream DateClient;
 

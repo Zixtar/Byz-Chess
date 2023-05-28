@@ -17,11 +17,23 @@ namespace Byz_Chess.Pieces
             this.row = row;
             this.col = col;
         }
-        public Offset(int row, int col,bool taking)
+        public Offset(int row, int col, bool taking)
         {
             this.row = row;
             this.col = col;
             this.taking = taking;
+        }
+    }
+
+    public struct Move
+    {
+        public Position OldPosition;
+        public Position NewPosition;
+
+        public Move(Position oldPos, Position newPos)
+        {
+            OldPosition = oldPos;
+            NewPosition = newPos;
         }
     }
 }

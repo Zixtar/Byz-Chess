@@ -34,6 +34,7 @@ namespace Byz_Chess
 
         public ChessBoard(IEnumerable<Resources.PositionUC> positions, int height)
         {
+            PlayerToPlay = 1;
             _colors = new Brush[]
             {
                 Color1, Color2
@@ -79,14 +80,6 @@ namespace Byz_Chess
         {
             var pieceMoves = SelectedPosition.GetMoves().ToList();
             if (SelectedPosition?.Piece == null) return;
-            if (SelectedPosition?.Piece is Pawn)
-            {
-                var mirror = Convert.ToInt32((SelectedPosition?.Piece as Pawn).Team == 2) + Convert.ToInt32((SelectedPosition.Column > Positions.First().Count / 2 - 1));
-                if (SelectedPosition.Piece.SideConscious && mirror % 2 == 1)
-                {
-                    pieceMoves = MirrorMoves();
-                }
-            }
             foreach (var move in pieceMoves)
             {
                 if (ValidMove(move))
@@ -98,15 +91,6 @@ namespace Byz_Chess
 
             }
 
-            List<Offset> MirrorMoves()
-            {
-                var mirroredMoves = new List<Offset>(); //I really dislike this but don't want to send the piece its position
-                for (int i = 0; i < pieceMoves.Count(); i++)
-                {
-                    mirroredMoves.Add(new Offset(pieceMoves[i].row, -pieceMoves[i].col, pieceMoves[i].taking));
-                }
-                return mirroredMoves;
-            }
         }
 
         public void ClearShownMoves()
@@ -128,7 +112,7 @@ namespace Byz_Chess
             if (startingPosition.Piece == null) return false; ;
             if (startingPosition.Piece.Grounded)
             {
-                if (!ValidMoveForGrouded(move, position,startingPosition))
+                if (!ValidMoveForGrouded(move, position, startingPosition))
                     return false;
             }
             if (position.Piece == null)
@@ -137,7 +121,7 @@ namespace Byz_Chess
             }
             var alliedPiece = position.Piece?.Team == startingPosition.Piece?.Team;
             if (alliedPiece) return false;
-            if (startingPosition.Piece is Pawn)
+            if (startingPosition.Piece is Pawn || startingPosition.Piece is InversePawn)
             {
                 return move.taking == true;
             }
@@ -243,6 +227,42 @@ namespace Byz_Chess
             return true;
         }
 
+        public void DoMove(Position oldPosition,Position newPosition)
+        {
+            newPosition.Piece = oldPosition.Piece;
+            oldPosition.Piece = null;
+        }
+
+        public bool InCheckAfterMove(Position position, Position startingPosition = null)
+        {
+            if (startingPosition == null)
+                startingPosition = SelectedPosition;
+            var inCheck = false;
+            var tempSelectedPosition = startingPosition.Piece;
+            var tempNextPosition = position.Piece;
+            var tempKingPosition = new Position();
+            position.Piece = startingPosition.Piece;
+            startingPosition.Piece = null;
+            if (position.Piece is King)
+            {
+                tempKingPosition = KingPieces[PlayerToPlay];
+                KingPieces[PlayerToPlay] = position;
+            }
+            if (IsInCheck(KingPieces[PlayerToPlay]))
+            {
+                inCheck = true;
+            }
+
+            startingPosition.Piece = tempSelectedPosition;
+            position.Piece = tempNextPosition;
+            if (startingPosition.Piece is King)
+            {
+                KingPieces[PlayerToPlay] = tempKingPosition;
+            }
+            return inCheck;
+        }
+
+
         private bool IsInCheck(Position kingPiece)
         {
             CheckingPieces.Clear();
@@ -252,7 +272,7 @@ namespace Byz_Chess
                 {
                     var position = new Position();
                     var newMove = move;
-                    if (moveSet.ClassType == typeof(Pawn))
+                    if (moveSet.ClassType == typeof(Pawn) || moveSet.ClassType == typeof(InversePawn))
                     {
                         if (kingPiece.Row - move.row > 0)
                         {
@@ -288,22 +308,11 @@ namespace Byz_Chess
                     {
                         foreach (var move in position.GetMoves())
                         {
-                            var trueMove = move;
-                            if (position?.Piece is Pawn)
-                            {
-                                var mirror = Convert.ToInt32((position?.Piece as Pawn).Team == 2) +
-                                             Convert.ToInt32((position.Column > Positions.First().Count / 2 - 1));
-                                if (position.Piece.SideConscious && mirror % 2 == 1)
-                                {
-                                    trueMove = new Offset(move.row, -move.col, move.taking);
-                                }
-                            }
-
-                            if (ValidMove(trueMove, position))
+                            if (ValidMove(move, position))
                             {
                                 SelectedPosition = position;
                                 var tempPositionPiece = position.Piece;
-                                var pos = Positions[position.Row + trueMove.row][position.Column + trueMove.col];
+                                var pos = Positions[position.Row + move.row][position.Column + move.col];
                                 var tempNewPositionPiece = pos.Piece;
                                 var tempKingPosition = new Position();
                                 if (position.Piece is King)
@@ -366,6 +375,37 @@ namespace Byz_Chess
                     position.Piece = null;
                 }
             }
+        }
+
+        internal List<Move> GetAllLegalMoves(int playerToPlay, ChessBoard board)
+        {
+            int oldPlayerToPlay = PlayerToPlay;
+            PlayerToPlay = playerToPlay;
+            var LegalMoves = new List<Move>();
+            foreach (var row in Positions)
+            {
+                foreach (var position in row)
+                {
+                    if (position.Piece != null && position.Piece.Team == playerToPlay)
+                    {
+                        var moves = position.Piece.GetMoves();
+                        foreach (var move in moves)
+                        {
+                            if (ValidMove(move, position))
+                            {
+                                var pos = Positions[position.Row + move.row][position.Column + move.col];
+                                if (!InCheckAfterMove(pos, position))
+                                {
+                                    LegalMoves.Add(new Move(position, pos));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            PlayerToPlay = oldPlayerToPlay;
+
+            return LegalMoves;
         }
     }
 }
