@@ -114,12 +114,12 @@ namespace Byz_Chess
         {
             int scoreWhite = 0;
             int scoreBlack = 0;
-            scoreWhite += GetScoreFromExistingPieces((int)Player.White, board);
-            scoreBlack += GetScoreFromExistingPieces((int)Player.Black, board);
+            scoreWhite += GetScoreFromExistingPieces(playerNr, board);
+            scoreBlack += GetScoreFromExistingPieces(AiNr, board);
 
             int evaluation = scoreBlack - scoreWhite;
 
-            int prespective = (board.PlayerToPlay == (int)Player.White) ? -1 : 1;
+            int prespective = (board.PlayerToPlay == playerNr) ? -1 : 1;
             return evaluation * prespective;
         }
 
@@ -353,7 +353,7 @@ namespace Byz_Chess
             {
                 int bestValue = int.MinValue;
 
-                List<Move> possibleMoves = board.GetAllLegalMoves((int)Player.Black, board);
+                List<Move> possibleMoves = board.GetAllLegalMoves(AiNr, board);
 
                 OrderMoves(possibleMoves, board);
                 foreach (var move in possibleMoves)
@@ -382,7 +382,7 @@ namespace Byz_Chess
             {
                 int bestValue = int.MaxValue;
 
-                List<Move> possibleMoves = board.GetAllLegalMoves((int)Player.White, board);
+                List<Move> possibleMoves = board.GetAllLegalMoves(playerNr, board);
 
                 OrderMoves(possibleMoves, board);
                 foreach (var move in possibleMoves)
@@ -418,7 +418,7 @@ namespace Byz_Chess
             int bestValue = int.MinValue;
             Move bestMove = new Move();
             bool turn;
-            if (board.PlayerToPlay == (int)Player.Black)
+            if (board.PlayerToPlay == AiNr)
             {
                 turn = false;
             }
@@ -464,7 +464,7 @@ namespace Byz_Chess
         public Move RandomMove(ChessBoard board)
         {
             Random rand = new Random();
-            List<Move> legalMoves = board.GetAllLegalMoves((int)Player.Black, board);
+            List<Move> legalMoves = board.GetAllLegalMoves(AiNr, board);
 
             if (board.IsCheckMate() == true) return new Move();
             return legalMoves[rand.Next(0, legalMoves.Count)];

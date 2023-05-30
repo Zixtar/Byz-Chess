@@ -167,7 +167,7 @@ namespace Byz_Chess
             ChessBoard.Board.PlayerToPlay = ColorCB.IsChecked == false ? 1 : 2;
             PlayVsAI ^= true;
             ChessBoard.VsAI = true;
-            var result = 2;
+            var result = 3;
             int.TryParse(DifficultyTxT.Text, out result);
             ChessBoard.AIdepth = result;
             ChessBoard.ArrangeStandardBoard();

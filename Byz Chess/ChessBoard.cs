@@ -274,7 +274,7 @@ namespace Byz_Chess
                     var newMove = move;
                     if (moveSet.ClassType == typeof(Pawn) || moveSet.ClassType == typeof(InversePawn))
                     {
-                        if (kingPiece.Row - move.row > 0)
+                        if (kingPiece.Row - move.row > 0 && kingPiece.Row - move.row < 4)
                         {
                             position = Positions[kingPiece.Row - move.row][kingPiece.Column - move.col];
                         }

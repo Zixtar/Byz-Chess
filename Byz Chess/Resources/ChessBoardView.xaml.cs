@@ -21,7 +21,7 @@ namespace Byz_Chess.Resources
         public int PlayerNr;
         public bool Online = false;
         public bool VsAI = false;
-        public int AIdepth = 2;
+        public int AIdepth = 3;
         AI Ai;
         private int _firstThreeMoves = 0;
 
@@ -59,6 +59,7 @@ namespace Byz_Chess.Resources
                         {
                             Globals.ScriereServer.WriteLine("F");
                         }
+                        MessageBox.Show("CheckMate");
                         ResetGame();
                     }
                 }
@@ -89,8 +90,8 @@ namespace Byz_Chess.Resources
 
         public void ResetGame()
         {
+            Board.PlayerToPlay = 1;
             Board.ClearPositions();
-            GameStarted = false;
             ArrangeStandardBoard();
         }
 
@@ -182,6 +183,11 @@ namespace Byz_Chess.Resources
 
             if (VsAI)
                 Ai = new AI(AIdepth, Board.PlayerToPlay);
+            if (Board.PlayerToPlay == 2)
+            {
+                Ai.EvaluateRandom(Board);
+                this._firstThreeMoves += 1;
+            }
         }
 
         public void TestingBoard()
