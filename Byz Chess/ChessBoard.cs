@@ -229,6 +229,10 @@ namespace Byz_Chess
 
         public void DoMove(Position oldPosition,Position newPosition)
         {
+            if (oldPosition.Piece is King)
+            {
+                KingPieces[PlayerToPlay] = newPosition;
+            }
             newPosition.Piece = oldPosition.Piece;
             oldPosition.Piece = null;
         }
